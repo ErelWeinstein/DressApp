@@ -32,7 +32,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginMain extends AppCompatActivity {
 FirebaseAuth auth;
 GoogleSignInClient googleSignInClient;
 ShapeableImageView imageView;
@@ -50,13 +50,17 @@ private final ActivityResultLauncher<Intent> activityResultLauncher = registerFo
                      public void onComplete(@NonNull Task<AuthResult> task) {
                          if(task.isSuccessful()){
                              auth = FirebaseAuth.getInstance();
-                             Glide.with(MainActivity.this).load(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl()).into(imageView);
+                             Glide.with(LoginMain.this).load(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl()).into(imageView);
                              name.setText(auth.getCurrentUser().getDisplayName());
                              mail.setText(auth.getCurrentUser().getEmail());
-                             Toast.makeText(MainActivity.this, "Signed in successfully!", Toast.LENGTH_SHORT).show();
+                             Toast.makeText(LoginMain.this, "Signed in successfully!", Toast.LENGTH_SHORT).show();
+                             Intent intent = new Intent(LoginMain.this,MainActivity2.class);
+                             intent.putExtra("USERNAME",auth.getCurrentUser().getDisplayName());
+
+                             startActivity(intent);
                          }
                          else {
-                             Toast.makeText(MainActivity.this, "Failed to sign in :" + task.getException(), Toast.LENGTH_SHORT).show();
+                             Toast.makeText(LoginMain.this, "Failed to sign in :" + task.getException(), Toast.LENGTH_SHORT).show();
                          }
                      }
                  });
@@ -84,7 +88,7 @@ private final ActivityResultLauncher<Intent> activityResultLauncher = registerFo
                 .requestEmail()
                 .build();
 
-        googleSignInClient = GoogleSignIn.getClient(MainActivity.this, options);
+        googleSignInClient = GoogleSignIn.getClient(LoginMain.this, options);
 
         auth = FirebaseAuth.getInstance();
 

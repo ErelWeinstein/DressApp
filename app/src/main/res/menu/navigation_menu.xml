@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_outfit_diary"
+        android:title="Outfit Diary" />
+    <item
+        android:id="@+id/nav_outfit_creation"
+        android:title="Create Outfits" />
+    <item
+        android:id="@+id/nav_profile"
+        android:title="My Closet" />
+</menu>
