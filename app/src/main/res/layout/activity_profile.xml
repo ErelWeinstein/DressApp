@@ -10,12 +10,14 @@
 
     <!-- Name Text -->
 
+
     <ImageView
         android:id="@+id/profileImage"
         android:layout_width="150dp"
         android:layout_height="140dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,103 +52,108 @@
 
     <!-- Add Clothing Button -->
 
+    <!-- Buttons for Clothing Categories -->
+
     <EditText
         android:id="@+id/clothingNameEditText"
         android:layout_width="376dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="60dp"
         android:hint="Enter clothing name"
         android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.457"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mailTv" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.37" />
+
 
     <EditText
         android:id="@+id/clothingTypeEditText"
         android:layout_width="377dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="184dp"
         android:hint="Enter clothing type"
         android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clothingNameEditText" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.271" />
 
-    <!-- Buttons for Clothing Categories -->
+    <Button
+        android:id="@+id/button_add_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="העלה תמונה"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImage" />
 
     <Button
         android:id="@+id/addClothingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Add Clothing"
+        android:layout_marginTop="4dp"
+        android:text="הוסף בגד"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clothingTypeEditText" />
+        app:layout_constraintTop_toBottomOf="@id/clothingTypeEditText"
+        app:layout_constraintVertical_bias="0.19" />
 
-    <LinearLayout
+    <GridLayout
         android:id="@+id/categoryButtonsContainer"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/addClothingButton"
+        android:layout_marginTop="20dp"
+        android:columnCount="2"
+        android:rowCount="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/addClothingButton">
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/button_jackets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:text="ג'קטים/סווטשרטים" />
 
-    <Button
-        android:id="@+id/button_jackets"
-        android:layout_width="170dp"
-        android:layout_height="69dp"
-        android:text="ג'קטים/סווטשרטים"
+        <Button
+            android:id="@+id/button_dresses"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="שמלות/חצאיות" />
+
+        <Button
+            android:id="@+id/button_pants"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="מכנסיים" />
+
+        <Button
+            android:id="@+id/button_shirts"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="חולצות" />
+    </GridLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.767"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintTop_toBottomOf="@id/categoryButtonsContainer"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <Button
-        android:id="@+id/button_dresses"
-        android:layout_width="155dp"
-        android:layout_height="66dp"
-        android:layout_marginBottom="60dp"
-        android:text="שמלות/חצאיות"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.781"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.995" />
-
-    <Button
-        android:id="@+id/button_pants"
-        android:layout_width="132dp"
-        android:layout_height="69dp"
-        android:text="מכנסיים"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.909" />
-
-    <Button
-        android:id="@+id/button_shirts"
-        android:layout_width="123dp"
-        android:layout_height="71dp"
-        android:text="חולצות"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

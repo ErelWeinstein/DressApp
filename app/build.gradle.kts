@@ -53,7 +53,11 @@ dependencies {
         implementation ("com.google.firebase:firebase-database:20.2.1")
         implementation(platform("com.google.firebase:firebase-bom:32.7.2")) // BOM for Firebase
         implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation ("com.google.firebase:firebase-database:20.2.1")
+        implementation ("com.google.firebase:firebase-database:20.2.1")
+        implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+    implementation ("com.google.firebase:firebase-storage:20.2.1")
+
 
 }
 

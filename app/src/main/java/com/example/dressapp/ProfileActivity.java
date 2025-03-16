@@ -2,19 +2,27 @@ package com.example.dressapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -22,121 +30,123 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    // Views for clothing item input
-    private EditText clothingNameEditText;
-    private EditText clothingTypeEditText;
+    private RecyclerView recyclerView;
+    private ClothingAdapter clothingAdapter;
+    private List<ClothingItem> clothingItemList;
 
     Button buttonShirts, buttonPants, buttonDresses, buttonJackets;
-    LinearLayout clothingContainer;
+    private String category;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // חיבור כפתורים ל-XML
+        // חיבור ל-XML
         buttonShirts = findViewById(R.id.button_shirts);
         buttonPants = findViewById(R.id.button_pants);
         buttonDresses = findViewById(R.id.button_dresses);
         buttonJackets = findViewById(R.id.button_jackets);
 
-        // חיבור ללחיצות כפתורים - כל כפתור יוביל לעמוד המתאים
-        buttonShirts.setOnClickListener(v -> openShirtsActivity());
-        buttonPants.setOnClickListener(v -> openPantsActivity());
-        buttonDresses.setOnClickListener(v -> openDressesActivity());
-        buttonJackets.setOnClickListener(v -> openJacketsActivity());
-
-        // הכנה ל-Firebase
+        // חיבור ל-Firebase
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("users");
 
-        // חיבור ל-Views
+        // חיבור ל-Views בפרופיל
         ImageView profileImageView = findViewById(R.id.profileImage);
         TextView nameTextView = findViewById(R.id.nameTv);
         TextView emailTextView = findViewById(R.id.mailTv);
 
-        // Clothing input fields
-        clothingNameEditText = findViewById(R.id.clothingNameEditText);
-        clothingTypeEditText = findViewById(R.id.clothingTypeEditText);
+        // הגדרת RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        clothingItemList = new ArrayList<>();
+        clothingAdapter = new ClothingAdapter(this, clothingItemList, position -> {
+            Toast.makeText(ProfileActivity.this, "Clicked on: " + clothingItemList.get(position).getName(), Toast.LENGTH_SHORT).show();
+        });
 
-        // בדיקה אם המשתמש מחובר והצגת הפרטים שלו
+        recyclerView.setAdapter(clothingAdapter);
+
+        // בדיקה אם המשתמש מחובר
         if (auth.getCurrentUser() != null) {
             String name = auth.getCurrentUser().getDisplayName();
             String email = auth.getCurrentUser().getEmail();
-            String photoUrl = auth.getCurrentUser().getPhotoUrl() != null
-                    ? auth.getCurrentUser().getPhotoUrl().toString()
-                    : ""; // תמונה ברירת מחדל במקרה שאין תמונה
+            String photoUrl = auth.getCurrentUser().getPhotoUrl() != null ? auth.getCurrentUser().getPhotoUrl().toString() : "";
 
             nameTextView.setText(name != null ? name : "No Name Available");
             emailTextView.setText(email != null ? email : "No email available");
             Glide.with(this).load(photoUrl).into(profileImageView);
+
+            // טעינת הבגדים מה-Firebase
+            loadClothingItems();
         } else {
-            // אם אין משתמש מחובר, מציגים פרטי ברירת מחדל
             nameTextView.setText("Guest");
             emailTextView.setText("No email available");
-            Glide.with(this).load("https://www.example.com/default-profile-image.png") // תמונת פרופיל ברירת מחדל
-                    .into(profileImageView);
+            Glide.with(this).load("https://www.example.com/default-profile-image.png").into(profileImageView);
         }
 
-        // חיבור לכפתור והוספת Listener
-        Button addClothingButton = findViewById(R.id.addClothingButton);
-        addClothingButton.setOnClickListener(v -> addClothingItem()); // קריאה לפונקציה להוספת פריט
+        // הוספת מאזיני לחיצה לכפתורים כדי להציג את הבגדים לפי קטגוריה
+        buttonShirts.setOnClickListener(v -> openCategoryActivity("Shirts"));
+        buttonPants.setOnClickListener(v -> openCategoryActivity("Pants"));
+        buttonDresses.setOnClickListener(v -> openCategoryActivity("Dresses"));
+        buttonJackets.setOnClickListener(v -> openCategoryActivity("Jackets"));
+
+
     }
 
-    // פונקציה להוספת פריט למסד הנתונים
-    private void addClothingItem() {
-        if (auth.getCurrentUser() != null) {
-            // קבלת קלט מה-EditText
-            String clothingName = clothingNameEditText.getText().toString().trim();
-            String clothingType = clothingTypeEditText.getText().toString().trim();
-            String imageUrl = "https://example.com/default-image-url.png"; // כתובת תמונה ברירת מחדל
+    private void loadClothingItems() {
+        if (auth.getCurrentUser() == null) return;
+        String userId = auth.getCurrentUser().getUid();
+        DatabaseReference wardrobeRef = myRef.child(userId).child("wardrobe");
 
-            // בדיקת קלט
-            if (clothingName.isEmpty() || clothingType.isEmpty()) {
-                Toast.makeText(this, "Please enter all details!", Toast.LENGTH_SHORT).show();
-                return;
+        wardrobeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                clothingItemList.clear();
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                    String name = itemSnapshot.child("name").getValue(String.class);
+                    String type = itemSnapshot.child("type").getValue(String.class);
+                    String imageUrl = itemSnapshot.child("imageUrl").getValue(String.class);
+
+                    if (type != null && type.equals(category)) {
+                        clothingItemList.add(new ClothingItem(name, type, imageUrl));
+                    }
+                }
+
+                // בדיקה אם הנתונים נכנסים לרשימה
+                Log.d("ItemListSize", "Size of clothingItemList: " + clothingItemList.size());
+
+                clothingAdapter.notifyDataSetChanged();
             }
 
-            // יצירת מסלול לנתוני המשתמש והארון
-            String userId = auth.getCurrentUser().getUid();
-            DatabaseReference userWardrobeRef = myRef.child(userId).child("wardrobe").push();
+            
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Error loading clothing items: " + error.getMessage());
+                Toast.makeText(ProfileActivity.this, "Failed to load clothing items.", Toast.LENGTH_SHORT).show();
+            }
 
-            // שמירת הפרטים למסד הנתונים
-            userWardrobeRef.child("name").setValue(clothingName);
-            userWardrobeRef.child("type").setValue(clothingType);
-            userWardrobeRef.child("imageUrl").setValue(imageUrl);
+        });
+    }
 
-            // הודעה על הצלחה
-            Toast.makeText(this, "Clothing item added successfully!", Toast.LENGTH_SHORT).show();
-
-            // ניקוי השדות לאחר ההוספה
-            clothingNameEditText.setText("");
-            clothingTypeEditText.setText("");
-        } else {
-            // אם אין משתמש מחובר
-            Toast.makeText(this, "Please log in to add clothing items.", Toast.LENGTH_SHORT).show();
+    private void filterClothingByCategory(String category) {
+        List<ClothingItem> filteredList = new ArrayList<>();
+        for (ClothingItem item : clothingItemList) {
+            if (item.getType().equals(category)) { // בודק אם הפריט שייך לקטגוריה שנבחרה
+                filteredList.add(item);
+            }
         }
+        clothingAdapter.updateClothingItems(filteredList); //מעדכן את הרשימה ב-RecyclerView
     }
 
-    // פתיחת פעילויות שונות עבור כל קטגוריה
-    private void openShirtsActivity() {
-        Intent intent = new Intent(ProfileActivity.this, ShirtsActivity.class);
+    private void openCategoryActivity(String category) {
+        Log.d("CategoryCheck", "Opening CategoryActivity with category: " + category); // בדיקה אם הקטגוריה מועברת נכון
+        Intent intent = new Intent(ProfileActivity.this, CategoryActivity.class);
+        intent.putExtra("category", category);
         startActivity(intent);
     }
 
-    private void openPantsActivity() {
-        Intent intent = new Intent(ProfileActivity.this, PantsActivity.class);
-        startActivity(intent);
-    }
 
-    private void openDressesActivity() {
-        Intent intent = new Intent(ProfileActivity.this, SkirtsDressesActivity.class);
-        startActivity(intent);
-    }
-
-    private void openJacketsActivity() {
-        Intent intent = new Intent(ProfileActivity.this, JacketsSweatersActivity.class);
-        startActivity(intent);
-    }
 }

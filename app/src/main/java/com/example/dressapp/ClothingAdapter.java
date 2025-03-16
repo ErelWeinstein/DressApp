@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -17,26 +18,31 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.ViewHo
 
     private Context context;
     private List<ClothingItem> clothingItems;
+    private OnImageClickListener onImageClickListener;
 
-    public ClothingAdapter(Context context, List<ClothingItem> clothingItems) {
+    public interface OnImageClickListener {
+        void onImageClick(int position);
+    }
+
+    public ClothingAdapter(Context context, List<ClothingItem> clothingItems, OnImageClickListener listener) {
         this.context = context;
         this.clothingItems = clothingItems;
+        this.onImageClickListener = listener; // שמירת המאזין
     }
 
-    // עדכון רשימת הבגדים
-    public void updateClothingItems(List<ClothingItem> clothingItems) {
-        this.clothingItems = clothingItems;
-        notifyDataSetChanged();
+    // עדכון רשימת הבגדים בצורה נכונה
+    public void updateClothingItems(List<ClothingItem> newList) {
+        this.clothingItems = newList; // מעדכן את הרשימה
+        notifyDataSetChanged(); // רענון התצוגה
     }
 
-    // יצירת ה-ViewHolder לכל אייטם ברשימה
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.activity_clothing_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onImageClickListener);
     }
 
-    // קשירת נתונים ל-View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ClothingItem item = clothingItems.get(position);
@@ -47,8 +53,10 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.ViewHo
         // הצגת סוג הבגד
         holder.clothingType.setText(item.getType());
 
-        // הצגת התמונה אם יש URL
-        Glide.with(context).load(item.getImageUrl()).into(holder.clothingImage);
+        // הצגת תמונת הבגד עם Glide
+        Glide.with(context)
+                .load(item.getImageUrl())
+                .into(holder.clothingImage);
     }
 
     @Override
@@ -56,17 +64,26 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.ViewHo
         return clothingItems.size();
     }
 
-    // מחלקת ViewHolder עבור כל אייטם
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView clothingName;
         TextView clothingType;
-        ImageView clothingImage;  // ImageView להצגת תמונת הבגד
+        ImageView clothingImage;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnImageClickListener listener) {
             super(itemView);
-            clothingName = itemView.findViewById(R.id.clothingName);  // הנחה שיש לך TextView בשם clothingName בעיצוב
-            clothingType = itemView.findViewById(R.id.clothingType);  // הנחה שיש לך TextView בשם clothingType בעיצוב
-            clothingImage = itemView.findViewById(R.id.clothingImage);  // הנחה שיש לך ImageView בשם clothingImage בעיצוב
+            clothingName = itemView.findViewById(R.id.clothingName);
+            clothingType = itemView.findViewById(R.id.clothingType);
+            clothingImage = itemView.findViewById(R.id.clothingImage);
+
+            // מאזין ללחיצה על התמונה
+            clothingImage.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onImageClick(position);
+                    }
+                }
+            });
         }
     }
 }

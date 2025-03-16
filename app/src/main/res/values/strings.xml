@@ -4,6 +4,8 @@
     <string name="previous">Previous</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="clothing_image">Clothing Image</string>
+
 
     <string name="app_name">DressApp</string>
     <string name="client_id">520290992333-qenkjhprkfqoi04fc7m9bn5dnth461o7.apps.googleusercontent.com</string>
