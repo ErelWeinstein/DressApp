@@ -11,6 +11,7 @@ navigationFragment = "2.6.0"
 navigationUi = "2.6.0"
 googleServices = "4.4.2"
 firebaseAuth = "23.0.0"
+playServicesLocation = "21.3.0"
 
 [libraries]
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
@@ -26,6 +27,7 @@ navigation-fragment = { group = "androidx.navigation", name = "navigation-fragme
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

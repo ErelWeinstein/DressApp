@@ -12,5 +12,13 @@
         android:text="מסך התאמת בגדים לפי מזג אוויר"
         android:textSize="18sp"
         android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/weatherTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="מזג האוויר יוצג כאן"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"/>
+
 
 </LinearLayout>
