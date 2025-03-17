@@ -15,18 +15,10 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         // הכפתורים במסך הראשי
-        Button btnOutfitDiary = findViewById(R.id.btn_outfit_diary);
         Button btnOutfitCreation = findViewById(R.id.btn_weather_outfit);
         Button btnProfile = findViewById(R.id.btn_profile);
 
-        // כאשר המשתמש לוחץ על "Outfit Diary"
-        btnOutfitDiary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // עובר למסך של Outfit Diary
-                startActivity(new Intent(MainActivity2.this, OutfitDiaryActivity.class));
-            }
-        });
+
 
         // כאשר המשתמש לוחץ על "Outfit Creation"
         btnOutfitCreation.setOnClickListener(new View.OnClickListener() {

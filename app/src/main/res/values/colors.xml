@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="olive_green">#808000</color> <!-- גוון ירוק זית -->
+    <color name="light_gray">#F5F5F5</color> <!-- אפור בהיר רקע נקי -->
+    <color name="dark_gray">#333333</color> <!-- אפור כהה לטקסטים וכו' -->
+    <color name="white">#FFFFFF</color> <!-- צבע לבן לכפתורים וטקסטים -->
+    <color name="medium_gray">#A0A0A0</color>
+    <color name="background_light">#F5F5F5</color>
+    <color name="olive_medium">#A9A17D</color> <!-- גוון קצת יותר כהה מירוק זית בהיר -->
+
+
+
 </resources>

@@ -5,38 +5,50 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginMain">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="150sp"
-        android:layout_height="150sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40sp"
-        android:id="@+id/profileImage"
-        app:shapeAppearance="@style/roundedImageview"/>
+    android:background="@color/olive_medium"> <!-- רקע ירוק זית -->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/profileImage"
-        android:layout_marginTop="10sp"
-        android:id="@+id/nameTv"/>
+<com.google.android.material.imageview.ShapeableImageView
+android:id="@+id/profileImage"
+android:layout_width="150dp"
+android:layout_height="150dp"
+android:layout_centerHorizontal="true"
+android:layout_marginTop="40dp"
+app:shapeAppearance="@style/roundedImageview" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/nameTv"
-        android:layout_marginTop="10sp"
-        android:id="@+id/mailTv"/>
+<TextView
+android:id="@+id/nameTv"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_centerHorizontal="true"
+android:layout_below="@id/profileImage"
+android:layout_marginTop="10dp"
+android:textColor="@color/dark_gray"
+android:textSize="18sp"
+android:textStyle="bold" />
 
-    <com.google.android.gms.common.SignInButton
-        android:layout_width="200sp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/mailTv"
-        android:layout_marginTop="20sp"
-        android:id="@+id/signIn"/>
+<TextView
+android:id="@+id/mailTv"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_centerHorizontal="true"
+android:layout_below="@id/nameTv"
+android:layout_marginTop="10dp"
+android:textColor="@color/medium_gray"
+android:textSize="16sp" />
+
+<com.google.android.gms.common.SignInButton
+android:id="@+id/signIn"
+android:layout_width="200dp"
+android:layout_height="wrap_content"
+android:layout_centerHorizontal="true"
+android:layout_below="@id/mailTv"
+android:layout_marginTop="20dp"
+android:backgroundTint="@color/dark_gray"
+android:text="Sign In"
+android:textColor="@color/white"
+android:textSize="30sp"
+android:padding="10dp"
+android:background="@drawable/rounded_corner" />
 
 </RelativeLayout>

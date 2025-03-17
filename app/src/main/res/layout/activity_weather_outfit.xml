@@ -1,30 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="20dp"
+    android:gravity="center"
+    android:background="@color/olive_medium"> <!-- רקע ירוק זית -->
 
+    <!-- כותרת ראשית -->
     <TextView
         android:id="@+id/textWeatherTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="מסך התאמת בגדים לפי מזג אוויר"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:text="התאמת בגדים לפי מזג האוויר"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_gray"
+        android:layout_gravity="center"
+        android:paddingBottom="12dp"/>
+
+    <!-- תצוגת מזג אוויר -->
     <TextView
         android:id="@+id/weatherTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="מזג האוויר יוצג כאן"
         android:textSize="18sp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:paddingBottom="16dp"/>
 
+    <!-- כפתור רענון (אופציונלי) -->
+    <Button
+        android:id="@+id/refreshWeatherButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔄 רענן נתונים"
+        android:backgroundTint="@color/dark_gray"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- רשימת הבגדים -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/weatherRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
-
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_corner"/>
 
 </LinearLayout>

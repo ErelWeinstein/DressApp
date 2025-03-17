@@ -4,23 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/olive_medium">
 
     <!-- Profile Image -->
-
-    <!-- Name Text -->
-
-
     <ImageView
         android:id="@+id/profileImage"
         android:layout_width="150dp"
         android:layout_height="140dp"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Name Text -->
     <TextView
         android:id="@+id/nameTv"
         android:layout_width="wrap_content"
@@ -28,6 +25,7 @@
         android:layout_marginTop="10dp"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/dark_gray"
         app:layout_constraintTop_toBottomOf="@id/profileImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,120 +38,119 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="16sp"
-        android:textColor="#757575"
+        android:textColor="@color/medium_gray"
         app:layout_constraintTop_toBottomOf="@id/nameTv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center" />
 
     <!-- Clothing Name Input -->
-
-    <!-- Clothing Type Input -->
-
-    <!-- Add Clothing Button -->
-
-    <!-- Buttons for Clothing Categories -->
-
     <EditText
         android:id="@+id/clothingNameEditText"
         android:layout_width="376dp"
         android:layout_height="60dp"
+        android:layout_marginTop="16dp"
         android:hint="Enter clothing name"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
+        android:background="@drawable/rounded_corner"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/mailTv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.37" />
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/clothingTypeEditText"
-        android:layout_width="377dp"
+        android:layout_width="376dp"
         android:layout_height="60dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="12dp"
         android:hint="Enter clothing type"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
+        android:background="@drawable/rounded_corner"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/clothingNameEditText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.271" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/button_add_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:text="העלה תמונה"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileImage" />
-
+    <!-- Add Clothing Button -->
     <Button
         android:id="@+id/addClothingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/dark_gray"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:padding="10dp"
         android:text="הוסף בגד"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clothingTypeEditText"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Buttons Grid -->
     <GridLayout
         android:id="@+id/categoryButtonsContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:columnCount="2"
         android:rowCount="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintTop_toBottomOf="@id/addClothingButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addClothingButton">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:id="@+id/button_jackets"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:text="ג'קטים/סווטשרטים" />
+            android:layout_margin="8dp"
+            android:text="ג'קטים/סווטשרטים"
+            android:backgroundTint="@color/dark_gray"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:padding="10dp" />
 
         <Button
             android:id="@+id/button_dresses"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="שמלות/חצאיות" />
+            android:layout_margin="8dp"
+            android:text="שמלות/חצאיות"
+            android:backgroundTint="@color/dark_gray"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:padding="10dp" />
 
         <Button
             android:id="@+id/button_pants"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="מכנסיים" />
+            android:layout_margin="8dp"
+            android:text="מכנסיים"
+            android:backgroundTint="@color/dark_gray"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:padding="10dp" />
 
         <Button
             android:id="@+id/button_shirts"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="חולצות" />
+            android:layout_margin="8dp"
+            android:text="חולצות"
+            android:backgroundTint="@color/dark_gray"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:padding="10dp" />
     </GridLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryButtonsContainer"
-        app:layout_constraintVertical_bias="1.0" />
-
+        app:layout_constraintTop_toBottomOf="@id/categoryButtonsContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
