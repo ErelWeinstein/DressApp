@@ -109,10 +109,15 @@ public class ProfileActivity extends AppCompatActivity {
                     String name = itemSnapshot.child("name").getValue(String.class);
                     String type = itemSnapshot.child("type").getValue(String.class);
                     String imageUrl = itemSnapshot.child("imageUrl").getValue(String.class);
+                    List<String> temperatureTag = new ArrayList<>();
+                    for (DataSnapshot tempTagSnapshot : itemSnapshot.child("temperatureTag").getChildren()) {
+                        temperatureTag.add(tempTagSnapshot.getValue(String.class));
+                    }
 
                     if (type != null && type.equals(category)) {
-                        clothingItemList.add(new ClothingItem(name, type, imageUrl));
+                        clothingItemList.add(new ClothingItem(name, type, imageUrl, temperatureTag));
                     }
+
                 }
 
                 // בדיקה אם הנתונים נכנסים לרשימה
@@ -121,7 +126,7 @@ public class ProfileActivity extends AppCompatActivity {
                 clothingAdapter.notifyDataSetChanged();
             }
 
-            
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("FirebaseError", "Error loading clothing items: " + error.getMessage());

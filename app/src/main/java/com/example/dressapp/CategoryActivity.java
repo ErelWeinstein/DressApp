@@ -63,21 +63,29 @@ public class CategoryActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 clothingItemList.clear();
                 for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
-                    // קבלת הנתונים מה-Firebase
+                    Log.d("FirebaseData", "Raw item: " + itemSnapshot.getValue());
+
                     String name = itemSnapshot.child("name").getValue(String.class);
                     String type = itemSnapshot.child("type").getValue(String.class);
                     String imageUrl = itemSnapshot.child("imageUrl").getValue(String.class);
+                    Object temperatureTag = itemSnapshot.child("temperatureTag").getValue();
+                    List<String> temperatureTags = new ArrayList<>();
 
-                    // בדיקת נתונים עם Log
+                    if (temperatureTag instanceof List) {
+                        temperatureTags = (List<String>) temperatureTag;
+                    } else if (temperatureTag instanceof String) {
+                        temperatureTags.add((String) temperatureTag);
+                    }
                     Log.d("FirebaseData", "Fetched item: Name = " + name + ", Type = " + type + ", Image = " + imageUrl);
 
-                    // בדיקת התאמה לקטגוריה שנבחרה
                     if (type != null && type.equalsIgnoreCase(category)) {
-                        clothingItemList.add(new ClothingItem(name, type, imageUrl));
+                        clothingItemList.add(new ClothingItem(name, type, imageUrl,temperatureTags));
                     }
                 }
                 clothingAdapter.notifyDataSetChanged();
             }
+
+
 
 
             @Override

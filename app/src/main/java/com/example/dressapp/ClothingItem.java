@@ -1,40 +1,38 @@
 package com.example.dressapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClothingItem {
+    private String imageUrl;
     private String name;
+    private List<String> temperatureTag; // עכשיו זו רשימה של מחרוזות
     private String type;
-    private String imageUrl;  // שדה לתמונה
 
-    public ClothingItem() {}
+    public ClothingItem() {
+        // נדרש לפיירבייס
+    }
 
-    public ClothingItem(String name, String type, String imageUrl) {
+    public ClothingItem(String name, String type, String imageUrl,List<String> temperatureTag) {
         this.name = name;
         this.type = type;
-        this.imageUrl = imageUrl;  // הגדרת התמונה
-    }
-
-    // Accessor methods
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+        this.imageUrl = imageUrl;
+        this.temperatureTag = temperatureTag != null ? temperatureTag : new ArrayList<>();
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getTemperatureTags() {
+        return temperatureTag != null ? temperatureTag : new ArrayList<>();
+    }
+
+    public String getType() {
+        return type;
     }
 }
